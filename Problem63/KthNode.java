@@ -1,0 +1,37 @@
+package Problem63;
+
+import java.util.Stack;
+
+public class KthNode {
+	/*
+	 * 二叉搜索树中第k个节点
+	 */
+	     private int k;
+	     public void kthNode(BinaryTreeNode root,int k){
+	    	 this.k=k;
+	    	 kthNode(root);
+	     }
+		 //中序遍历
+		 public void kthNode(BinaryTreeNode root){   
+
+               if(root==null)
+				   return;
+
+			   if(root.leftNode!=null)
+			       kthNode(root.leftNode);
+
+			   k--;
+			   if(k==0) 
+				   System.out.print(root.data);
+
+			   if(root.rightNode!=null)
+			       kthNode(root.rightNode);
+			  
+	}
+}
+
+class BinaryTreeNode {
+	int data;
+	BinaryTreeNode leftNode;
+	BinaryTreeNode rightNode;
+}

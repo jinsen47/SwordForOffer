@@ -1,0 +1,41 @@
+package Problem57;
+
+public class GetNext {
+	/*
+	 * 中序遍历中下一结点
+	 */
+	public BinaryTreeNode getNext(BinaryTreeNode pNode){
+		
+		if(pNode==null)
+			return null;
+		
+		BinaryTreeNode pNext=null;
+		
+		//有右子树----则为右子树的最左结点
+		if(pNode.rightNode!=null){
+			BinaryTreeNode pRight =pNode.rightNode;
+			while(pRight.leftNode!=null)
+				pRight=pRight.leftNode;
+			pNext=pRight;
+		}
+		//无右子树----则当pnode是父节点的左子结点时 pnode的父节点
+		else if(pNode.parentNode!=null){
+			BinaryTreeNode pCurrent =pNode;
+			BinaryTreeNode pParent=pNode.parentNode;
+			while(pParent!=null && pCurrent==pParent.rightNode){
+				pCurrent=pParent;
+				pParent=pParent.parentNode;
+			}
+			pNext=pParent;
+		}
+		return pNext;
+	}
+
+}
+class BinaryTreeNode {
+	public int data;
+	public BinaryTreeNode leftNode;
+	public BinaryTreeNode rightNode;
+	public BinaryTreeNode parentNode;
+}
+

@@ -1,0 +1,59 @@
+package Problem50;
+
+import java.util.Stack;
+
+public class Serial {
+
+		 public boolean GetNodePath(BinaryTreeNode root,BinaryTreeNode node,Stack<BinaryTreeNode> path){   
+			  if(root==node){
+				  path.add(root);
+				  return true;
+			  }
+			  BinaryTreeNode cunrrent=root;
+			  path.add(root);
+			  boolean found=false;
+			  while(!found && cunrrent.leftNode!=null){
+				  found=GetNodePath(cunrrent.leftNode, node, path) ;
+				  cunrrent=cunrrent.leftNode;
+			  }
+			  cunrrent=root;
+			  while(!found && cunrrent.rightNode!=null){
+				  found=GetNodePath(cunrrent.rightNode, node, path) ;
+				  cunrrent=cunrrent.rightNode;
+			  }
+
+			  if(!found)
+				  path.pop();			  
+			  return found;
+	}
+		 public BinaryTreeNode GetLastCommonNode(Stack<BinaryTreeNode> path1,Stack<BinaryTreeNode> path2){
+			 
+			 BinaryTreeNode lastnode=null;
+			 while(!path1.empty() && !path2.empty()){
+				 BinaryTreeNode node1=path1.pop();
+				 BinaryTreeNode node2=path2.pop();
+				 if(node1==node2){
+					 lastnode=node1;
+					 break;
+				 }
+			 }
+			 return lastnode;
+		 }
+		 
+		 public BinaryTreeNode GetLastCommonParent(BinaryTreeNode root,BinaryTreeNode node1,BinaryTreeNode node2){
+			 
+			 if(root==null||node1==null||node2==null)
+				 return null;
+			 Stack<BinaryTreeNode> path1=new Stack<BinaryTreeNode>();
+			 Stack<BinaryTreeNode> path2=new Stack<BinaryTreeNode>();
+			 GetNodePath(root, node1, path1);
+			 GetNodePath(root, node2, path2);
+			 return GetLastCommonNode(path1, path2);
+		 }
+}
+
+class BinaryTreeNode {
+	int data;
+	BinaryTreeNode leftNode;
+	BinaryTreeNode rightNode;
+}
